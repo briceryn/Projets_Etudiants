@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="auteurs" content="Lolliot matteo & Lawson brice">
+  <title>Accueil</title>
+  <link rel="stylesheet" type="text/css" href="..//css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+  <section id="section1">
+    <ul>
+      <li><a href="..//html/index.html"><span id="nature">Nature</span>Unity</a></li>
+      <li><a href="" class="fa-solid fa-bars"> </a></li>
+    </ul>
+  </section>
+
+  <nav>
+    <ul>
+      <li><a href="..//html/index.html" class="bouton">Accueil</a></li>
+      <li><a href="#apropos" class="bouton">Apropos</a></li>
+      <li><a href="..//html/outils.html" class="bouton">Outils</a></li>
+      <li><a href="..//html/contact.html" class="bouton">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section class="section2">
+    <div class="img_container">
+      <img class="img1" src="..//medias/img/52d4affaf980954da669e9a2ccb77f76.jpg" alt="">
+      <canvas id = "canvas"></canvas>
+    </div>
+    <div id="menu">
+      <label for="couleurPicker">Couleur de fond pour l'objet </label>
+      <input type="color" id="couleurPicker" onchange="changerCouleurFond(this.value)">
+      <button class="bouton" onclick="afficherObjet()" id="boutonAfficherObjet">Afficher l'objet</button>
+      <label for="selectValues">Choisir des valeurs :</label>
+      <select id="selectValues" onchange="choisirValeur(this.value)">
+          <option value="0.1">0.1</option>
+          <option value="0.5">0.5</option>
+          <option value="1.0">1.0</option>
+      </select>
+    <label for="rangeValues">Choisir des valeurs non entières :</label>
+    <input type="range" id="rangeValues" min="0" max="100" step="0.1" onchange="choisirValeurs(this.value)">
+    <span id="rangeValueDisplay">100</span>
+
+  </div>
+  </section>
+
+  <a href="..//html/decouvrir.html" class="bouton">Découvrir</a>
+  
+  <div class="texte">
+    
+      <a id = "apropos"></a>
+      <hr>
+      🌿 À propos de NatureUnity.fr <br>
+
+       Bien plus qu'un simple site, NatureGuardians.fr est une communauté passionnée dédiée à la préservation de notre planète. Nous croyons en la puissance de l'action collective pour créer un impact positif sur l'environnement. Rejoignez-nous dans notre mission de protéger la nature, de préserver la biodiversité et de construire un avenir durable pour les générations futures.
+      <hr>
+       🌍 Notre Mission <br>
+
+      NatureGuardians.fr a pour mission de sensibiliser, éduquer et mobiliser la société sur les enjeux environnementaux critiques. Nous croyons que chaque individu a un rôle à jouer dans la protection de la nature. Que vous soyez un passionné de plein air, un amateur de sciences ou simplement quelqu'un soucieux de l'avenir de notre planète, vous êtes le bienvenu ici.
+       <hr>
+      💚 Ce que Nous Proposons <br>
+       Informations Cruciales : Explorez des articles informatifs et des ressources détaillées sur les problématiques environnementales actuelles, des changements climatiques à la déforestation, en passant par la conservation des espèces.
+
+      Actions Pratiques : Découvrez des initiatives concrètes que vous pouvez intégrer dans votre vie quotidienne pour réduire votre empreinte écologique. Que ce soit des conseils sur le recyclage, des idées pour promouvoir la durabilité ou des suggestions pour des modes de vie respectueux de l'environnement, nous avons tout ce dont vous avez besoin.
+
+       Projets Collaboratifs : Participez à des projets de préservation de la nature et à des campagnes de sensibilisation. Rejoignez d'autres passionnés et contribuez à des initiatives qui font une réelle différence.
+
+       Échanges et Partage : Connectez-vous avec une communauté engagée. Partagez vos expériences, posez des questions, et inspirez-vous des actions de personnes du monde entier qui œuvrent pour un avenir plus vert.
+       <hr>
+       🤝 Ensemble, Protégeons Notre Maison Commune
+       <br>
+       NatureUnity.fr est plus qu'un site web ; c'est une plateforme où les amoureux de la nature se rassemblent pour créer un impact durable. Chaque geste compte, chaque voix compte. Rejoignez-nous aujourd'hui et devenez un Gardien de la Nature, car ensemble, nous pouvons préserver la beauté de notre planète pour les générations à venir.
+       <hr>
+  
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="footer-col">
+          <h4>NatureUnity</h4>
+          <ul>
+            <li><a href="">A propos</a></li>
+            <li><a href="">Nos services</a></li>
+            <li><a href="">Politique de confidentilité</a></li>
+
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Aide</h4>
+          <ul>
+            <li><a href="">FAQ</a></li>
+            <li><a href="">avis</a></li>
+            <li><a href="">faire un don</a></li>
+            
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Boutique en ligne</h4>
+          <ul>
+            <li><a href="">sacs</a></li>
+            <li><a href="">chaussures</a></li>
+            <li><a href="">Vêtements</a></li>
+            
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Nous suivre</h4>
+          <div class="social-links">
+            <a href=""><i class="fab fa-facebook-f"></i></a>
+            <a href=""><i class="fab fa-twitter"></i></a>
+            <a href=""><i class="fab fa-instagram"></i></a>
+            <a href=""><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="..//Js/script.js"></script>
+</body>
+</html>
