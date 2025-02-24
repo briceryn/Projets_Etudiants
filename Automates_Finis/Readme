@@ -1,0 +1,12 @@
+Analyseur de Nombres Décimaux en C
+Ce projet implémente un automate fini conçu pour vérifier si une chaîne de caractères représente un nombre entier valide au format décimal , selon les conventions du langage C. L'objectif est de détecter les erreurs d'écriture des nombres et de s'assurer qu'ils respectent les règles du langage, notamment concernant la gestion des zéros initiaux.
+
+La fonction principale du programme, isDec(const char* str), prend en paramètre une chaîne de caractères. Elle retourne 1 si la chaîne est un entier valide, et 0 dans le cas contraire. Cette validation suit les conventions spécifiques du langage C : un nombre entier ne doit pas commencer par un zéro, sauf s'il s'agit uniquement du chiffre "0". En effet, en C, un entier commençant par zéro est interprété comme un nombre en base 8 (octal).
+
+L'automate utilise trois états principaux pour analyser la chaîne. L' état initial (0) attend le premier caractère : s'il lit un '0', il passe à l' état 2 (reconnaissance d'un zéro unique) ; s'il lit un chiffre compris entre '1'et '9', il passe à l' état 1 (lecture d'un entier non nul). Depuis l'état 1, la lecture de chiffres supplémentaires ( '0'à '9') reste dans le même état, tandis que tout autre caractère entraîne un rejet. L'état 2, quant à lui, ne permet aucune transition : si d'autres caractères suivent, la chaîne est rejetée.
+
+Par exemple, lors de l'analyse de la chaîne "120", l'automate commence en état 0 et passe à l' état 1 après avoir lu le '1'. Il reste en état 1 après avoir lu les caractères '2'et '0'. Lorsque la fin de la chaîne est atteinte, étant dans un état final valide, la chaîne est acceptée. À l'inverse, pour la chaîne "075", l'automate allumé un '0'dès le départ et passe en état 2 . La lecture du '7'depuis cet état entraîne un rejet, car aucun chiffre ne devrait suivre un zéro initial.
+
+Une fonction de test automatique, test_isDec()permet de vérifier si la fonction fonctionne correctement sur un ensemble de cas prédéfinis. Si toutes les chaînes sont correctement acceptées ou refusées, un message "Test OK" s'affiche. Sinon, des messages d'erreur indiquant les chaînes mal validées, en précisant si elles ont été acceptées ou refusées à tort, ainsi que le nombre total d'erreurs détectées.
+
+En résumé, cet automate garantit que les entiers entrés respectent les règles de formatage du langage C, en particulier la gestion des zéros initiaux. Ce type de validation est essentiel pour éviter des erreurs d'interprétation des nombres, notamment lorsqu'il s'agit de bases numériques différentes.
