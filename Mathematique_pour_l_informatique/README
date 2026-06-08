@@ -1,0 +1,46 @@
+# Projet I5OM - Transformee de Fourier Discrete et Rapide
+
+## Description
+
+Ce projet presente l'implementation en Python des transformees de Fourier discretes (DFT) et des transformees de Fourier rapides (FFT) en 1D et 2D, ainsi que leurs versions inverses. L'objectif est de comparer les approches naives et optimisees pour le traitement de signaux et d'images.
+
+## Auteurs
+
+- Thomas MORAUX
+- Rayan LAWSON
+
+## Sommaire
+
+I. Transformee de Fourier discrete 2D (approche naive)
+II. Transformee de Fourier rapide discrete 1D
+III. Transformee de Fourier rapide discrete 2D
+IV. Transformee de Fourier inverse rapide 1D
+V. Transformee de Fourier inverse rapide 2D
+
+## I. Transformee de Fourier discrete 2D (approche naive)
+
+### Theorie
+
+La DFT 2D transforme une image du domaine spatial (x,y) vers le domaine frequentiel (u,v). La formule est :
+F(u,v) = sum_{x=0}^{M-1} sum_{y=0}^{N-1} f(x,y) * exp(-2iπ (ux/M + vy/N))
+
+### Programme Python
+
+```python
+import cmath
+
+def dft2d(input_matrix):
+    M = len(input_matrix)
+    N = len(input_matrix[0])
+    output_matrix = [[0j for _ in range(N)] for _ in range(M)]
+    
+    for u in range(M):
+        for v in range(N):
+            sum_val = 0j
+            for x in range(M):
+                for y in range(N):
+                    angle = -2 * cmath.pi * ((u * x) / M + (v * y) / N)
+                    sum_val += input_matrix[x][y] * cmath.exp(angle)
+            output_matrix[u][v] = sum_val
+    
+    return output_matrix
