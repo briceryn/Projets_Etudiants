@@ -1,0 +1,32 @@
+# Helpdesk - Systeme de tickets d'assistance pour cours
+
+[![PHP](https://img.shields.io/badge/PHP-8.0+-777BB4?logo=php&logoColor=white)](https://php.net)
+[![jQuery](https://img.shields.io/badge/jQuery-3.7.1-0769AD?logo=jquery&logoColor=white)](https://jquery.com)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+## Description
+
+Helpdesk est une application web developpee en PHP permettant aux etudiants de creer des tickets pour poser des questions ou signaler des problemes lies aux cours, TD ou TP. Les tuteurs peuvent consulter tous les tickets, les prendre en charge et y repondre via un systeme de commentaires.
+
+## Fonctionnalites
+
+### Pour les etudiants
+- Creation de tickets (titre, description, categorie, priorite)
+- Consultation de ses propres tickets
+- Ajout de commentaires sur ses tickets
+- Suivi de l'etat des tickets (Ouvert, En cours, Resolu)
+
+### Pour les tuteurs
+- Consultation de tous les tickets
+- Mise a jour du statut des tickets
+- Reponse aux etudiants via les commentaires
+- Filtrage et recherche de tickets
+
+### Fonctionnalites transverses
+- Authentification securisee avec sessions PHP
+- Gestion des roles (etudiant/tuteur)
+- Filtres dynamiques (statut, priorite, recherche textuelle)
+- Interface responsive et moderne
+- Animations jQuery fluides
+- Validation des formulaires (cote client et serveur)
+- Stockage JSON (pas de base de donnees requise)
