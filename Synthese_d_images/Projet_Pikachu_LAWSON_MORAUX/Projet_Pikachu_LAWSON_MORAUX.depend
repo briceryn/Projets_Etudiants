@@ -1,0 +1,28 @@
+# depslib dependency file v1.0
+1763824521 source:/home/brice/Documents/codes/Projet_Pikachu_LAWSON_MORAUX/src/main.cpp
+	<GL/glut.h>
+	<GL/glu.h>
+	<iostream>
+	<cmath>
+	"pikachu.h"
+
+1762525670 source:/home/brice/Documents/codes/Projet_Pikachu_LAWSON_MORAUX/src/animation.cpp
+
+1762525670 source:/home/brice/Documents/codes/Projet_Pikachu_LAWSON_MORAUX/src/camera.cpp
+
+1762525670 source:/home/brice/Documents/codes/Projet_Pikachu_LAWSON_MORAUX/src/primitive.cpp
+
+1762525670 source:/home/brice/Documents/codes/Projet_Pikachu_LAWSON_MORAUX/src/texture.cpp
+
+1763824521 /home/brice/Documents/codes/Projet_Pikachu_LAWSON_MORAUX/src/pikachu.h
+	<GL/glut.h>
+
+1763824521 source:/home/brice/Documents/codes/Projet_Pikachu_LAWSON_MORAUX/src/pikachu.cpp
+	"pikachu.h"
+	<cstdio>
+	<cstdlib>
+	<iostream>
+	<jpeglib.h>
+	<setjmp.h>
+	<cmath>
+
