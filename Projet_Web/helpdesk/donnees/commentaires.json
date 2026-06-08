@@ -1,0 +1,10 @@
+[
+    {
+        "id": "69fa73d2bab6d",
+        "ticket_id": 1,
+        "auteur_id": 2,
+        "auteur_nom": "Pierre Martin",
+        "message": "T'as mal initialisé la variable",
+        "date": "2026-05-05 22:48:50"
+    }
+]

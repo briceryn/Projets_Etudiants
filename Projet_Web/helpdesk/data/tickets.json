@@ -1,0 +1,13 @@
+[
+    {
+        "id": 1,
+        "auteur_id": 1,
+        "auteur_nom": "Jean Dupont",
+        "titre": "Problème avec l'exercice 3 du TD2",
+        "description": "Je n'arrive pas à comprendre la question 3 de l'exercice 2 du TD...",
+        "categorie": "TD",
+        "priorite": "Moyenne",
+        "statut": "Ouvert",
+        "date_creation": "2026-03-10 10:30:00"
+    }
+]

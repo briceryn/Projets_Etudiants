@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "username": "etudiant",
+        "password": "$2y$12$CcRrhI2B7tpR2MNKsFtHtejHg511cCV0lq6bcbdZtvvQTCQ1NGy3K",
+        "role": "etudiant",
+        "nom": "Dupont",
+        "prenom": "Jean",
+        "email": "jean.dupont@etudiant.fr"
+    },
+    {
+        "id": 2,
+        "username": "tuteur",
+        "password": "$2y$12$cVCk.B9K74e0r6aC.qdEUuJuWSlxUVb.jhh2hi0zhSAp\/dqhqs6Fy",
+        "role": "tuteur",
+        "nom": "Martin",
+        "prenom": "Pierre",
+        "email": "pierre.martin@tuteur.fr"
+    }
+]

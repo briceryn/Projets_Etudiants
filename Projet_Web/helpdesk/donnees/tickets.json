@@ -1,0 +1,13 @@
+[
+    {
+        "id": 1,
+        "auteur_id": 1,
+        "auteur_nom": "Jean Dupont",
+        "titre": "Exercice2 du TD3",
+        "description": "Je ne comprends pas la boucle for",
+        "categorie": "TD",
+        "priorite": "Haute",
+        "statut": "En cours",
+        "date_creation": "2026-05-05 22:46:34"
+    }
+]

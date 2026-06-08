@@ -1,0 +1,10 @@
+[
+    {
+        "id": "abc123",
+        "ticket_id": 1,
+        "auteur_id": 2,
+        "auteur_nom": "Pierre Martin",
+        "message": "Je vais regarder ça et revenir vers vous.",
+        "date": "2026-03-10 11:15:00"
+    }
+]
