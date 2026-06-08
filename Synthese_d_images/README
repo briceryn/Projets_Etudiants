@@ -1,0 +1,133 @@
+# Projet de Synthese d'Image - Modelisation et Animation de Pikachu
+
+## Description
+
+Ce projet de synthese d'image, realise dans le cadre de la Licence 3 Informatique, a pour objectif la modelisation, l'habillage et l'animation du personnage Pikachu en 3D. Il met en œuvre les concepts fondamentaux de la synthese d'image : modelisation geometrique, application de textures, eclairage et animation.
+
+## Auteurs
+
+- Ryan LAWSON
+- Thomas MORAUX
+
+## Encadrant
+
+S. Languetin
+
+## Objectifs
+
+- Modeliser Pikachu en utilisant des primitives geometriques complexes
+- Implementer au moins une primitive parametrique (sphere)
+- Appliquer deux textures differentes (une plaquee et une enroulee)
+- Gerer deux types de lumieres avec des proprietes distinctes
+- Implementer un systeme de navigation camera complet
+- Creer des animations fluides (automatique et manuelle)
+- Structurer le code de maniere modulaire et maintenable
+
+## Architecture du projet
+projet_si/
+├── main.cpp # Point d'entree, gestion GLUT et evenements
+├── pikachu.h # Declaration de la classe Pikachu
+├── pikachu.cpp # Implementation de la modelisation
+├── peau.jpg # Texture principale pour le corps
+├── rayures.jpg # Texture secondaire (ceinture et oreilles)
+├── scene.jpg # Texture d'arriere-plan
+└── Rapport_LAWSON_MORAUX_SI.pdf # Rapport du projet
+
+## Modelisation de Pikachu
+
+La modelisation repose sur une composition hierarchique de primitives geometriques :
+
+| Partie du corps | Primitive | Caracteristiques |
+|----------------|-----------|------------------|
+| Corps | Sphere | Ecrasement selon l'axe Z (facteur 0.8) |
+| Tete | Sphere | Positionnee au-dessus du corps, echelle 0.85 |
+| Oreilles | Cylindres | Allonges et inclines, parties interieures noires |
+| Pattes | Spheres | Tailles differentes selon position (avant/arriere) |
+| Queue | Segments quadrilateres | Bout triangulaire noir |
+| Visage | Spheres et triangles | Yeux, joues, nez, bouche |
+
+## Primitive parametrique
+
+La sphere est generee a l'aide des equations parametriques :
+x = r * cos(theta) * sin(phi)
+y = r * sin(theta) * sin(phi)
+z = r * cos(phi)
+
+Avec :
+- r : rayon de la sphere
+- theta ∈ [0, 2π] : angle azimutal (longitude)
+- phi ∈ [0, π] : angle polaire (latitude)
+
+## Gestion des textures
+
+### Formats supportes
+- JPEG (via libjpeg)
+
+### Textures utilisees
+
+| Fichier | Application | Type de mapping |
+|---------|-------------|-----------------|
+| peau.jpg | Corps, tete, oreilles | Plaque (UV sphere) |
+| rayures.jpg | Ceinture, interieur oreilles | Enroule (cylindre) |
+| scene.jpg | Arriere-plan | Quad texture |
+
+### Gestion des erreurs
+En cas d'echec du chargement d'une texture :
+- Texture damier noir/blanc genere automatiquement pour la peau
+- Couleur unie rouge pour la ceinture
+- Message d'avertissement dans la console
+
+## Eclairage
+
+### Lumiere principale (LIGHT0)
+- Position : (3.0, 5.0, 3.0) - directionnelle haute
+- Diffuse : Blanc (0.9, 0.9, 0.9)
+- Ambiance : Gris moyen (0.3, 0.3, 0.3)
+- Speculaire : Blanc pur (1.0, 1.0, 1.0)
+
+### Lumiere secondaire (LIGHT1)
+- Position : (-3.0, 3.0, -3.0) - contre-jour
+- Diffuse : Bleuatre (0.5, 0.5, 0.7)
+- Ambiance : Bleu tres sombre (0.1, 0.1, 0.2)
+
+### Materiaux
+- Speculaire : (0.5, 0.5, 0.5)
+- Brillance : 50.0
+- GL_COLOR_MATERIAL active
+
+## Animations
+
+### Animation automatique
+- Rotation de la scene : 0.5 degre par frame autour de l'axe Y
+- Balancement de Pikachu : 5 degres d'amplitude (fonction sinus)
+
+### Controles manuels
+| Touche | Action |
+|--------|--------|
+| ESPACE | Active/desactive l'animation de Pikachu |
+| R | Active/desactive la rotation automatique |
+| Z | Zoom avant |
+| z | Zoom arriere |
+| Fleches | Rotation camera (5 degres par pas) |
+| Souris (clic gauche) | Rotation libre de la camera |
+| C | Affiche les informations de la camera |
+| ESC | Quitte l'application |
+
+## Systeme de camera
+
+La camera implemente un systeme orbite :
+- Distance variable (2.0 a 20.0 unites)
+- Angle vertical limite a ±89 degres
+- Angle horizontal illimite
+
+## Compilation et execution
+
+### Pre-requis
+- OpenGL
+- GLUT
+- libjpeg
+
+### Commande de compilation
+
+```bash
+g++ -o pikachu main.cpp pikachu.cpp -lGL -lGLU -lglut -ljpeg
