@@ -1,0 +1,184 @@
+# 6 Qui Prend - Jeu de cartes en reseau
+
+## Description
+
+6 Qui Prend est un jeu de cartes strategique developpe en C permettant a plusieurs joueurs de jouer en local ou en reseau. Le jeu implemente les regles officielles du jeu de Wolfgang Kramer (1994). L'application utilise une architecture client-serveur avec des mecanismes de communication inter-processus (FIFOs, semaphores) et des sockets TCP/IP pour le jeu en reseau.
+
+## Auteurs
+
+- Ryan LAWSON
+- Thomas MORAUX
+
+## Architecture du systeme
+
+L'application suit une architecture maître-esclave avec les composants suivants :
+
+- **Gestionnaire du jeu (Game Manager)** : Processus coordinateur central orchestrant les parties
+- **Joueurs humains** : Processus esclaves avec interface utilisateur
+- **Joueurs robots** : Processus autonomes avec strategies pre-programmees
+- **Client reseau** : Interface pour joueurs distants
+┌─────────────────────────────────────────────────────────────────┐
+│ GESTIONNAIRE (Manager) │
+│ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ │
+│ │ FIFOs │ │ Semaphores │ │ TCP Socket │ │
+│ │ (Local) │ │ (Sync) │ │ (Reseau) │ │
+│ └──────┬──────┘ └──────┬──────┘ └──────┬──────┘ │
+│ │ │ │ │
+└─────────┼────────────────┼────────────────┼─────────────────────┘
+│ │ │
+┌─────┴─────┐ ┌─────┴─────┐ ┌─────┴─────┐
+│ Joueur 1 │ │ Joueur 2 │ │ Client │
+│ (Humain) │ │ (Robot) │ │ (TCP) │
+└───────────┘ └───────────┘ └───────────┘
+
+
+## Fonctionnalites
+
+### Mode local
+- Gestionnaire de jeu centralise
+- Communication via FIFOs (tubes nommes)
+- Synchronisation par semaphores System V
+- Jusqu'a 10 joueurs par partie
+
+### Mode reseau
+- Serveur TCP multi-clients
+- Protocole de communication structure
+- Timeout d'inactivite (60 secondes)
+- Support de jusqu'a 100 clients simultanes
+
+### Joueurs robots
+Trois niveaux de strategie :
+- **Niveau 0 (Debutant)** : Joue toujours la plus petite carte
+- **Niveau 1 (Intermédiaire)** : Evalue les risques, evite de ramasser des rangees
+- **Niveau 2 (Avance)** : Strategie agressive, tente de faire ramasser les adversaires
+
+### Interface utilisateur
+- Interface texte complete
+- Affichage des cartes en main
+- Affichage des rangees sur la table
+- Affichage des scores en temps reel
+
+### Journalisation
+- Enregistrement de tous les evenements dans logs/parties.log
+- Timestamps precis
+- Generation de statistiques via script AWK
+
+## Regles du jeu (resume)
+
+| Type de carte | Têtes de bœuf |
+|---------------|---------------|
+| Multiple de 55 | 7 têtes |
+| Multiple de 11 | 5 têtes |
+| Multiple de 10 | 3 têtes |
+| Multiple de 5 | 2 têtes |
+| Autre | 1 tête |
+
+- 104 cartes numerotees de 1 a 104
+- 4 rangees de 6 cartes maximum
+- 10 cartes par joueur par manche
+- Elimination a 66 têtes de bœuf
+- Le joueur avec le score le plus bas gagne
+
+## Structure du projet
+projet_6quiprend/
+├── main.c # Point d'entree principal
+├── jeu.c / jeu.h # Logique metier (cartes, rangees, parties)
+├── joueurs.c / joueurs.h # Gestion des joueurs et IA
+├── communication.c / communication.h # FIFOs, sockets, semaphores
+├── gestionnaire.c / gestionnaire.h # Orchestrateur central
+├── Makefile # Script de compilation
+├── install.sh # Script d'installation
+├── stats.awk # Script de statistiques
+├── logs/ # Dossier des fichiers de log
+│ └── parties.log # Historique des parties
+└── README.md # Documentation
+
+## Protocoles de communication
+
+### Tubes nommes (FIFOs) pour communication locale
+
+```c
+int creer_fifo(const char* chemin);
+int ouvrir_fifo(const char* chemin, int mode);
+int envoyer_fifo(int fd, const void* data, size_t taille);
+int recevoir_fifo(int fd, void* data, size_t taille, int timeout_sec);
+
+Sockets TCP pour communication reseau
+int creer_serveur_tcp(int port);
+int accepter_connexion_tcp(int sock_serveur, char* ip_client, int* port_client);
+int connecter_client_tcp(const char* adresse, int port);
+int envoyer_tcp(int socket, const void* data, size_t taille);
+int recevoir_tcp(int socket, void* buffer, size_t taille_max, int timeout_sec);
+
+Structure des messages
+typedef struct {
+    int type;
+    int id_joueur;
+    int id_partie;
+    union {
+        Carte carte;
+        int score;
+        int choix;
+        char message[256];
+    } donnees;
+} Message;
+
+enum TypeMessage {
+    MSG_DEMANDE_CARTE = 1,
+    MSG_CARTE_JOUE = 2,
+    MSG_INFO_PARTIE = 3,
+    MSG_SCORE = 4,
+    MSG_FIN_MANCHE = 5,
+    MSG_FIN_PARTIE = 6,
+    MSG_ERREUR = 7,
+    MSG_PING = 8,
+    MSG_CONFIRMATION = 9
+};
+
+Semaphores pour synchronisation
+c
+SemaphoreJeu* creer_semaphores(int nb_sem, int valeur_init);
+void sem_wait_jeu(SemaphoreJeu* sem, int num_sem);   // Operation P
+void sem_signal_jeu(SemaphoreJeu* sem, int num_sem); // Operation V
+
+Structures de donnees
+Carte
+typedef struct {
+    int valeur;          // De 1 a 104
+    int tetes_de_boeuf;  // 1, 2, 3, 5 ou 7 têtes
+} Carte;
+
+Rangee
+
+typedef struct {
+    Carte cartes[NB_MAX_CARTES_RANGEE];  // 6 cartes max
+    int nb_cartes;
+    int total_tetes;
+} Rangee;
+
+Joueur
+
+typedef struct {
+    int id;
+    char nom[TAILLE_NOM];
+    int score;
+    Carte main[NB_CARTES_MAIN];  // 10 cartes par manche
+    int nb_cartes_main;
+    int est_robot;
+    int est_actif;
+} Joueur;
+
+Partie
+
+typedef struct {
+    int id_partie;
+    Joueur* joueurs[MAX_JOUEURS];  // max 10 joueurs
+    int nb_joueurs;
+    Rangee rangees[NB_RANGEES];    // 4 rangees
+    Carte pioche[NB_CARTES_TOTAL]; // 104 cartes
+    int manche_actuelle;
+    int tour_actuel;
+    int joueur_actif;
+    int partie_terminee;
+    int gagnant_id;
+} Partie;
