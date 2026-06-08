@@ -1,0 +1,73 @@
+# Projet Graphe 2026 - Algorithme DSATUR
+
+## Description
+
+Ce projet implemente l'algorithme de coloration de graphe DSATUR (Saturation Degree) en Java. L'objectif est de colorer un graphe non oriente avec un minimum de couleurs, en prioritisant les sommets ayant le plus haut degre de saturation et le plus haut degre.
+
+## Auteurs
+
+- Thomas MORAUX
+- Ryan LAWSON
+
+## Fonctionnalites
+
+- Chargement de graphes depuis differents formats de fichiers (DIMACS, SNAP, KONECT)
+- Detection automatique de l'indexation (0-based ou 1-based)
+- Implementation de l'algorithme DSATUR avec optimisation
+- Calcul du nombre de couleurs utilisees (k)
+- Calcul du ratio rho = nk / n (proportion de sommets colories avant la derniere couleur)
+- Mesure du temps d'execution
+
+## Architecture du projet
+ProjetGraphe2026/
+├── src/
+│ └── projetgraphe2026/
+│ ├── ProjetGraphe2026.java # Classe principale
+│ ├── Graph.java # Representation du graphe (liste d'adjacence)
+│ ├── GraphReader.java # Lecture des fichiers de graphes
+│ ├── DSATUR.java # Algorithme de coloration
+│ └── Result.java # Stockage des resultats
+├── nbproject/ # Fichiers de configuration NetBeans
+├── build.xml # Script de build Ant
+├── manifest.mf # Manifeste JAR
+└── Email-Enron.txt # Exemple de graphe (reseau d'emails Enron)
+
+
+## Algorithmes
+
+### DSATUR (Saturation Degree)
+
+L'algorithme DSATUR procede comme suit :
+
+1. Chaque sommet possede un degre de saturation correspondant au nombre de couleurs differentes utilisees par ses voisins colories.
+2. A chaque iteration, selectionner le sommet avec le plus haut degre de saturation (egalite departagee par le degre le plus eleve).
+3. Colorer ce sommet avec la plus petite couleur disponible.
+4. Mettre a jour la saturation des voisins non colories.
+5. Repeter jusqu'a ce que tous les sommets soient colories.
+
+### Optimisations
+
+- Utilisation de `BitSet` pour stocker efficacement les couleurs des voisins
+- File de priorite (max-heap) pour la selection du prochain sommet
+- Mise a jour paresseuse (lazy update) pour eviter les recalculs inutiles
+
+## Formats de fichiers supportes
+
+| Format | Description | Exemple |
+|--------|-------------|---------|
+| DIMACS | Format standard des problemes de coloration | `p edge N M` puis `e u v` |
+| SNAP | Format simple avec deux entiers par ligne | `u v` (indexation 0-based) |
+| KONECT | Format similaire a SNAP | `u v` (commentaires avec `%`) |
+
+Le lecteur detecte automatiquement si l'indexation commence a 0 ou a 1.
+
+## Installation
+
+### Pre-requis
+- Java JDK 17 ou superieur
+- Apache Ant (optionnel)
+
+### Compilation avec Ant
+
+```bash
+ant compile
