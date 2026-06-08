@@ -1,0 +1,51 @@
+## Utilisateurs LDAP
+
+| Utilisateur | Mot de passe | Role |
+|-------------|--------------|------|
+| user1 | user1 | Utilisateur standard |
+| user2 | user2 | Utilisateur standard |
+
+## Partages Samba
+
+| Partage | Chemin | Acces |
+|---------|-------|-------|
+| commun | /srv/samba/commun | Lecture/ecriture (public) |
+| privel | /home/%S | Personnel (utilisateur proprietaire) |
+
+## Securite (iptables)
+
+Politique par defaut : DROP sur INPUT et FORWARD
+
+Flux autorises :
+
+- SSH depuis interface IEM (port 22)
+- DNS depuis interfaces privee et interconnexion (port 53)
+- HTTP/HTTPS depuis interface privee (ports 80, 443)
+- DHCP depuis interface privee (port 67)
+- Samba depuis interface privee (ports 139,445,137,138)
+- Ping depuis interface privee (ICMP echo-request)
+- NAT pour acces Internet (MASQUERADE)
+
+## Sauvegardes automatisees
+
+| Donnee | Frequence | Destination |
+|--------|-----------|-------------|
+| /etc | Quotidienne (15h) | aragon.iem via rsync |
+| Bases de donnees | Manuelle | /bd/backups/ |
+| Annuaire LDAP | Manuelle | /bd/ldap-backups/ |
+
+## Installation
+
+1. Acceder au serveur via iLO : http://serv-06.iem
+2. Installer Debian 13 Trixie via boot PXE
+3. Configurer les interfaces reseau dans /etc/network/interfaces
+4. Executer le script de filtrage : /root/filtrage.sh
+5. Demarrer les services :
+   ```bash
+   systemctl start bind9
+   systemctl start isc-dhcp-server
+   systemctl start apache2
+   systemctl start mariadb
+   systemctl start postgresql
+   systemctl start slapd
+   systemctl start smbd nmbd
